@@ -1,8 +1,16 @@
-function App() {
+import {Navbar, Loader, Welcome, Footer, Transactions, Services} from './components/index'
+
+const App = () => {
   return (
     <>
-      <div className="App">
-        <h1 className="text-5xl font-bold underline">Hello world!</h1>
+      <div className="min-h-screen">
+        <div className='gradient-bg-welcome'>
+          <Navbar/>
+          <Welcome/>
+        </div>
+        <Transactions/>
+        <Services/>
+        <Footer/>
       </div>
     </>
   );
