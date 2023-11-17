@@ -25,7 +25,7 @@ const Welcome = () => {
 
     }
     return (
-        <div className="grid mf:grid-cols-2 sm:grid-cols-1  justify-center items-center">
+        <div className="grid mf:grid-cols-2 sm:grid-cols-1  justify-center items-center w-11/12 mx-auto">
             <div className="flex mf:flex-row items-start justify-between md:p-20 py-4 my-12 px-4">
                 <div className="flex flex-1 justify-start flex-col mf:mr-10">
                     <h1 className="text-3xl sm:text-5xl text-white text-gradient py-2">
@@ -35,7 +35,7 @@ const Welcome = () => {
                     </h1>
                     <p className="text-left mt-5 text-white font-light md:w-9/12 w-11/12 text-base">Send and Exchange Crypto Easier Than Ever</p>
                     <button
-                    className="flex w-96 flex-row justify-center itemscenter my-5 bg-[#5F615A] p-3 rounded-full cursor-pointer hover:bg-[#4F4D20]"
+                    className="flex md:w-2/5 sm:w-48 flex-row justify-center itemscenter my-5 bg-[#5F615A] p-3 rounded-full cursor-pointer hover:bg-[#4F4D20]"
                     onClick={connectWallet}
                     ><span className="text-bold text-white text-base">Connet Wallet</span></button>
                 </div>
