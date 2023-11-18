@@ -22,8 +22,10 @@ const getEthereumContract = () => {
 export const TransactionsProvider = ({ children }) => {
   const [connectedAccount, setConnectedAccount] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const [transactionCount, setTransactionCount] = useState(localStorage.getItem('transactionCount'));
-
+  const [transactionCount, setTransactionCount] = useState(
+    localStorage.getItem("transactionCount")
+  );
+  const [transactions, setTransactions] = useState([]);
 
   const [formData, setFormData] = useState({
     addressTo: "",
@@ -35,6 +37,29 @@ export const TransactionsProvider = ({ children }) => {
     setFormData((prevState) => ({ ...prevState, [name]: e.target.value }));
   };
 
+  const getAllTransaction = async () => {
+    try {
+      if (!ethereum) return alert("Metamask is not connected!");
+      const transactionContract = getEthereumContract();
+      const availableTransactions =
+        await transactionContract.getAllTransactions();
+      const structuredTransaction = availableTransactions.map(
+        (transaction) => ({
+          addressTo: transaction.reciever,
+          addressFrom: transaction.sender,
+          timestamp: new Date(
+            transaction.timestamp.toNumber() * 1000
+          ).toLocaleString(),
+          message: transaction.message,
+          amount: parseInt(transaction.amount._hex) / 10 ** 18,
+        })
+      );
+
+      setTransactions(structuredTransaction);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const checkIfWalletIsConnected = async () => {
     try {
@@ -43,6 +68,7 @@ export const TransactionsProvider = ({ children }) => {
 
       if (accounts.length) {
         setConnectedAccount(accounts[0]);
+        getAllTransaction();
       } else {
         console.log("No Accounts Found!");
       }
@@ -52,6 +78,15 @@ export const TransactionsProvider = ({ children }) => {
     }
   };
 
+  const checkIfTransactionsExist = async () => {
+    try {
+      const transactionContract = getEthereumContract();
+      const transactionCount = await transactionContract.getTransactionCount();
+      window.localStorage.setItem("transactionCount", transactionCount);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const connectWallet = async () => {
     try {
       if (!ethereum) return alert("Metamask is not connected!");
@@ -71,7 +106,7 @@ export const TransactionsProvider = ({ children }) => {
       const { addressTo, amount, message } = formData;
       const transactionContract = getEthereumContract();
       const parsedAmount = ethers.utils.parseEther(amount);
-    console.log(transactionContract)
+      console.log(transactionContract);
       await ethereum.request({
         method: "eth_sendTransaction",
         params: [
@@ -84,17 +119,20 @@ export const TransactionsProvider = ({ children }) => {
         ],
       });
 
-      const transactionhash = await transactionContract.addTOBlockchain(addressTo, parsedAmount, message);
-      console.log(transactionhash)
+      const transactionhash = await transactionContract.addTOBlockchain(
+        addressTo,
+        parsedAmount,
+        message
+      );
+      console.log(transactionhash);
       setIsLoading(true);
-      console.log(`Loading --> ${transactionhash.hash}`)
+      console.log(`Loading --> ${transactionhash.hash}`);
       await transactionhash.wait();
       setIsLoading(false);
-      console.log(`Success --> ${transactionhash.hash}`)
-      
+      console.log(`Success --> ${transactionhash.hash}`);
+
       const transactionCount = await transactionContract.getTransactionCount();
       setTransactionCount(transactionCount.toNumber());
-
     } catch (error) {
       console.log(error);
     }
@@ -102,6 +140,7 @@ export const TransactionsProvider = ({ children }) => {
 
   useEffect(() => {
     checkIfWalletIsConnected();
+    checkIfTransactionsExist();
   }, []);
 
   return (
@@ -113,6 +152,8 @@ export const TransactionsProvider = ({ children }) => {
         setFormData,
         handleChange,
         sendTransaction,
+        transactions,
+        isLoading
       }}
     >
       {children}

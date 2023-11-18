@@ -21,27 +21,25 @@ return (<div className="bg-[#181918]
     <div  className="p-3 px-5 my-2 w-max rounded-xl  shadow-2xl  white-glassmorphism">
     <p className="text-white text-base">Amount: {amount} Eth</p>
     </div>
-        <div  className="p-3 px-5 my-2 w-max rounded-xl  shadow-2xl  white-glassmorphism">
+    {message && (
+    <div className="p-3 px-5 my-2 w-max rounded-xl  shadow-xl  white-glassmorphism">
+        <p className="text-white text-base ">Message: {message}</p>
+    </div>
+  )}
+        <div  className="p-3 px-5 my-2 w-max shadow-2xl  ">
         <a href={`https://sepolia.etherscan.io/address/${addressFrom}`} target="_blank" rel="noreferrer">
         <p className="text-white text-base">From: {addressFrom.slice(0,10) + '...' + addressFrom.slice(addressFrom.length - 5)} </p>
         </a>
 
         </div>
-        <div  className="p-3 px-5 my-2 w-max rounded-xl  shadow-2xl  white-glassmorphism">
+        <div  className="p-3 px-5  my-2 w-max  shadow-2xl ">
         <a href={`https://sepolia.etherscan.io/address/${addressTo}`} target="_blank" rel="noreferrer">
         <p className="text-white text-base">To: { addressTo.slice(0,10) + '...' + addressFrom.slice(addressTo.length - 5)} </p>
         </a>
         </div>
-        
-
-    
+           
       
-  {message && (
-    <div className="bg-black p-3 px-5 my-2 w-max rounded-3xl  shadow-2xl">
-        <br />
-        <p className="text-white text-base ">Message: {message} Eth</p>
-    </div>
-  )}
+ 
 
 
     </div>
@@ -49,7 +47,7 @@ return (<div className="bg-[#181918]
 </div>)
 }
 
-    const {connectedAccount} = useContext(TransactionContext);
+    const {connectedAccount, transactions} = useContext(TransactionContext);
     return (
         <div className="flex w-full justify-center items-center 2xl:px-20 gradient-bg-transactions">
       <div className="flex flex-col md:p-12 py-12 px-4">
@@ -64,7 +62,7 @@ return (<div className="bg-[#181918]
         )}
 
         <div className="flex flex-wrap justify-center items-center mt-10">
-          {dummyData.reverse().map((transaction, i) => (
+          {transactions.reverse().map((transaction, i) => (
             <TransactionCard key={i} {...transaction}/>
           ))}
         </div>

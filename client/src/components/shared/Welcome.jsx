@@ -19,8 +19,8 @@ const Input = ({placeholder, name, type, value, handleChange}) => (
 )
 
 const Welcome = () => {
-    const [isLoading, setIsLoading] = useState(false);
-    const {connectWallet, connectedAccount, handleChange, formData, sendTransaction} = useContext(TransactionContext);
+
+    const {connectWallet, connectedAccount, handleChange, formData, sendTransaction, isLoading} = useContext(TransactionContext);
     
     const handleSubmit = (e) => {
         const { addressTo, amount, message } = formData;
