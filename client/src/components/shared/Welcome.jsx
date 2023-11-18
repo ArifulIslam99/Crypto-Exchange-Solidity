@@ -1,9 +1,10 @@
+import React, {useContext} from "react";
 import {AiFillPayCircle} from "react-icons/ai"
 import {SiEthereum} from "react-icons/si"
 import {BsInfoCircle} from "react-icons/bs"
 import Loader from "../shared/Loader";
 import { useState } from "react";
-
+import { TransactionContext } from "../../context/TransactionContext";
 const Input = ({placeholder, name, type, value, handleChange}) => (
     <input
      placeholder={placeholder}
@@ -17,10 +18,8 @@ const Input = ({placeholder, name, type, value, handleChange}) => (
 
 const Welcome = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const connectWallet = () => {
-
-    }
-
+    const {connectWallet, connectedAccount} = useContext(TransactionContext);
+    
     const handleSubmit = () => {
 
     }
@@ -34,10 +33,10 @@ const Welcome = () => {
                         With Transaxt!
                     </h1>
                     <p className="text-left mt-5 text-white font-light md:w-9/12 w-11/12 text-base">Send and Exchange Crypto Easier Than Ever</p>
-                    <button
+                    { !connectedAccount && <button
                     className="flex md:w-2/5 sm:w-48 flex-row justify-center itemscenter my-5 bg-[#5F615A] p-3 rounded-full cursor-pointer hover:bg-[#4F4D20]"
                     onClick={connectWallet}
-                    ><span className="text-bold text-white text-base">Connet Wallet</span></button>
+                    ><span className="text-bold text-white text-base">Connet Wallet</span></button>}
                 </div>
             </div>
             <div className="flex flex-col  items-center justify-start w-11/12 mf:mt-0 my-4 mx-auto">
@@ -58,12 +57,16 @@ const Welcome = () => {
                 </div> */}
                 
                 <div className="p-5 sm:w-96 w-full flex flex-col items-center blue-glassmorphism">
-
+                    
                     <div className="flex flex-row justify-center items-center white-glassmorphism p-2">
-                    <SiEthereum fontSize={25} color="green"/> 
-                    <p className="text-white font-light text-sm">
-                            Wallet Address
-                        </p>
+                    { connectedAccount? <SiEthereum fontSize={25} color="green"/> : 
+                    <SiEthereum fontSize={25} color="red"/>
+                    }
+               
+
+                    { connectedAccount && <p className="text-white font-light text-sm">
+                            {connectedAccount}
+                        </p>}
                     </div>
                     <Input placeholder="Reciever Address"
                      name="reciever" type="text"
