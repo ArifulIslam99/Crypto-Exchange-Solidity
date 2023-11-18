@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 import {Navbar, Loader, Welcome, Footer, Transactions, Services} from './components/index'
 
 const App = () => {
@@ -9,7 +10,7 @@ const App = () => {
           <Welcome/>
         </div>
         <Transactions/>
-        <Services/>
+        {/* <Services/> */}
         <Footer/>
       </div>
     </>
