@@ -69,6 +69,7 @@ export const TransactionsProvider = ({ children }) => {
       if (accounts.length) {
         setConnectedAccount(accounts[0]);
         getAllTransaction();
+      
       } else {
         console.log("No Accounts Found!");
       }
@@ -94,6 +95,7 @@ export const TransactionsProvider = ({ children }) => {
         method: "eth_requestAccounts",
       });
       setConnectedAccount(accounts);
+      window.location.reload(true)
     } catch (error) {
       console.log(error);
       throw new error("No Ethereum Object!");
@@ -130,9 +132,9 @@ export const TransactionsProvider = ({ children }) => {
       await transactionhash.wait();
       setIsLoading(false);
       console.log(`Success --> ${transactionhash.hash}`);
-
       const transactionCount = await transactionContract.getTransactionCount();
       setTransactionCount(transactionCount.toNumber());
+      window.reload()
     } catch (error) {
       console.log(error);
     }

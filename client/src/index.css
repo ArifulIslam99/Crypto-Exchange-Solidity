@@ -16,9 +16,9 @@ body {
 .gradient-bg-welcome {
   background-color:#0f0e13;
   background-image: 
-    radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-    radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
-    radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+    radial-gradient(at 0% 0%, rgb(112, 116, 66) 0, transparent 50%), 
+    radial-gradient(at 50% 0%, rgba(70, 70, 139, 0.603) 0, transparent 50%), 
+    radial-gradient(at 100% 0%, rgb(156, 23, 69) 0, transparent 50%);
 }
 
 .gradient-bg-services {
@@ -32,14 +32,14 @@ body {
   background-color: #0f0e13;
   background-image: 
     radial-gradient(at 0% 100%, hsla(253,16%,7%,1) 0, transparent 50%), 
-    radial-gradient(at 50% 0%, hsla(225,39%,25%,1) 0, transparent 50%);
+    radial-gradient(at 50% 0%, rgb(58, 101, 245)transparent 50%);
 }
 
 .gradient-bg-footer {
   background-color: #0f0e13;
   background-image: 
-    radial-gradient(at 0% 100%, hsla(253,16%,7%,1) 0, transparent 53%), 
-    radial-gradient(at 50% 150%, hsla(339,49%,30%,1) 0, transparent 50%);
+    radial-gradient(at 0% 100%, rgb(15, 14, 15) 0, transparent 53%), 
+    radial-gradient(at 50% 150%, rgb(114, 8, 43) 0, transparent 50%);
 }
 
 .blue-glassmorphism {

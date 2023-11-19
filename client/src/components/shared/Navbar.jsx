@@ -1,14 +1,20 @@
 import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
 import logo from "./../../../images/exchange-rate.png";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { TransactionContext } from "../../context/TransactionContext";
+
 
 const NavbarItems = ({ title, classprops }) => {
+
   return (
-    <li className={`mx-4 text-xl cursor-pointer ${classprops}`}>{title}</li>
+    <li className={`mx-4 text-xl cursor-pointer ${classprops}`}>
+      <a href="/">{title}</a>
+    </li>
   );
 };
 const Navbar = () => {
+  const {connectedAccount, connectWallet} = useContext(TransactionContext);
   const [toggleMenu, setToggleMenu] = useState(false);
   return (
     <nav className="w-full flex md:justify-center justify-between items-center p-4 ">
@@ -19,9 +25,9 @@ const Navbar = () => {
         {["Home", "Exchange", "Wallet"].map((item, index) => (
           <NavbarItems key={item + index} title={item} />
         ))}
-        <li className="bg-[#2952e3] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#2546bd]">
+        { !connectedAccount && <li onClick={connectWallet}  className="bg-[#2952e3] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#2546bd]">
           Login
-        </li>
+        </li>}
       </ul>
       <div className="flex relative">
         {toggleMenu ? (
